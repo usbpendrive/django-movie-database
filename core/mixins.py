@@ -1,5 +1,6 @@
 from django.core.cache import caches
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 
 class CachePageVaryOnCookieMixin:
@@ -12,7 +13,7 @@ class CachePageVaryOnCookieMixin:
     def get_timeout(cls):
         if hasattr(cls, 'timeout'):
             return cls.timeout
-        cache = cache[cls.cache_name]
+        cache = caches[cls.cache_name]
         return cache.default_timeout
 
     @classmethod
