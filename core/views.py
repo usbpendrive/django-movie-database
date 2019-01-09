@@ -11,7 +11,7 @@ class MovieDetail(DetailView):
 
 class MovieList(ListView):
     model = Movie
-    paginate_by = 1
+    paginate_by = 5
 
 
 class PersonDetail(DetailView):
