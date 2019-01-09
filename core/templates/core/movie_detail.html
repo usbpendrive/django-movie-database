@@ -9,6 +9,30 @@
     <p class="lead">
         {{ object.plot }}
     </p>
+
+    <ul class="movie_image list-inline">
+        {% for i in object.movieimage_set.all %}
+            <li class="list-inline-item">
+                <img src="{{ i.image.url }}" >
+            </li>
+        {% endfor %}
+    </ul>
+    <p>
+        Directed by {{ object.director }}
+    </p>
+    <p>
+        Written by {{ object.writers.all|unordered_list }}
+    </p>
+    <h2>Actors</h2>
+    <ul>
+        {% for credit in object.role_set.all %}
+            <li>
+                <a href="{% url 'core:PersonDetail' pk=credit.person.id %}">
+                    {{ credit.person }}: {{ credit.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
 {% block sidebar %}
@@ -18,6 +42,19 @@
             {{ object.get_rating_display }}
         </span>
     </div>
+    {% if image_form %}
+        <div>
+            <h2>Upload New Image</h2>
+            <form method="post" enctype="multipart/form-data"
+                  action="{% url 'core:MovieImageUpload' movie_id=object.id %}">
+                {% csrf_token %}
+                {{ image_form.as_p }}
+                <p>
+                    <button class="btn btn-primary">Upload</button>
+                </p>
+            </form>
+        </div>
+    {% endif %}
     <div>
         <h2>
             Score: {{ object.score|default_if_none:"TBD" }}
