@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{% block title %}MyMDB{% endblock %}</title>
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    {% block css %}{% endblock %}
+    <style>
+        .mymdb-masthead {
+            background-color: #eee;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+<div class="mymdb-masthead">
+    <div class="container">
+        <nav class="nav">
+            <div class="navbar-brand">MyMDB</div>
+            <a class="nav-link" href="{% url 'core:MovieList' %}">Movies</a>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 mymdb-main">
+            {% block main %}{% endblock %}
+        </div>
+        <div class="col-sm-3 offset-sm-1 mymdb-sidebar">
+            {% block sidebar %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+</body>
+</html>
