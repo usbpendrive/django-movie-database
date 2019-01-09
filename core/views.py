@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from core.models import Movie, Person, Vote
 from core.forms import VoteForm, MovieImageForm
+from core.mixins import CachePageVaryOnCookieMixin
 
 
 class CreateVote(LoginRequiredMixin, CreateView):
@@ -67,9 +68,17 @@ class MovieDetail(DetailView):
         return None
 
 
-class MovieList(ListView):
+class MovieList(CachePageVaryOnCookieMixin, ListView):
     model = Movie
-    paginate_by = 5
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        ctx = super(MovieList, self).get_context_data(**kwargs)
+        page = ctx['page_obj']
+        paginator = ctx['paginator']
+        ctx['page_is_first'] = (page.number == 1)
+        ctx['page_is_last'] = (page.number == paginator.num_pages)
+        return ctx
 
 
 class PersonDetail(DetailView):
