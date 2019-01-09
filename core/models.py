@@ -1,6 +1,6 @@
 from uuid import uuid4
+import datetime
 
-from django.conf import settings
 from django.db import models
 from django.db.models.aggregates import Sum
 from django.conf import settings
@@ -29,12 +29,12 @@ class Person(models.Model):
             return '{}, {} ({}-{})'.format(
                 self.last_name,
                 self.first_name,
-                self.born,
-                self.died)
+                datetime.date.strftime(self.born, '%d/%m/%Y'),
+                datetime.date.strftime(self.died, '%d/%m/%Y'))
         return '{}, {} ({})'.format(
             self.last_name,
             self.first_name,
-            self.born)
+            datetime.date.strftime(self.born, '%d/%m/%Y'))
 
 
 class MovieManager(models.Manager):
