@@ -10,6 +10,7 @@ django = "==2.1.5"
 psycopg2 = "==2.7.6.1"
 pillow = "==5.4.1"
 django-environ = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.7"
